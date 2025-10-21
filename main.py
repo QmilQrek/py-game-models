@@ -18,16 +18,18 @@ def main() -> None:
                 )
 
             race_data = pdata.get("race")
-            race, _ = Race.objects.get_or_create(name=race_data["name"],
-                                                 defaults={"description":
-                                                 race_data.get("description")})
+            race, _ = Race.objects.get_or_create(
+                name=race_data["name"],
+                defaults={"description": race_data.get("description")},
+            )
 
             for skill_data in race_data["skills"]:
-                skill, _ = Skill.objects.get_or_create(
-                        name=skill_data["name"],
-                        race=race,
-                        defaults={"bonus": skill_data.get("bonus", "")}
-                    )
+                Skill.objects.get_or_create(
+                    name=skill_data["name"],
+                    race=race,
+                    defaults={"bonus": skill_data.get("bonus", "")},
+                )
+
             Player.objects.get_or_create(
                 nickname=nickname,
                 defaults={
